@@ -8,7 +8,7 @@ from typing import Any
 import pandas as pd
 from fastapi import FastAPI, File, UploadFile, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from openai import OpenAI
+from groq import Groq
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -22,7 +22,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-openai_client = OpenAI(api_key=os.environ["OPENAI_API_KEY"])
+groq_client = Groq(api_key=os.environ["GROQ_API_KEY"])
 
 
 # ── helpers ──────────────────────────────────────────────────────────────────
@@ -135,8 +135,8 @@ Produce a concise, actionable analysis in the following JSON structure (return O
 Statistical summary:
 {json.dumps(analysis, indent=2)}
 """
-    response = openai_client.chat.completions.create(
-        model="gpt-4o-mini",
+    response = groq_client.chat.completions.create(
+        model="llama-3.3-70b-versatile",
         messages=[{"role": "user", "content": prompt}],
         max_tokens=1500,
         temperature=0.3,
