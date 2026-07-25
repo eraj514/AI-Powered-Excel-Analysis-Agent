@@ -13,7 +13,7 @@ from groq import Groq
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-app = FastAPI(title="Excel Analyzer API", version="1.0.0")
+app = FastAPI(title="Excel Analyzer API", version="1.0.0", docs_url="/api/docs", redoc_url="/api/redoc", openapi_url="/api/openapi.json")
 
 app.add_middleware(
     CORSMiddleware,
