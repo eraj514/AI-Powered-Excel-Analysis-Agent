@@ -28,7 +28,10 @@ groq_client = Groq(api_key=os.environ["GROQ_API_KEY"])
 # ── helpers ──────────────────────────────────────────────────────────────────
 
 def _sanitize(obj: Any) -> Any:
-    """Recursively make a value JSON-safe (no NaN / Inf)."""
+    """Recursively make a value JSON-safe (no NaN / Inf, no numpy scalars)."""
+    # numpy integer types → Python int
+    if type(obj).__module__ == "numpy" and hasattr(obj, "item"):
+        obj = obj.item()
     if isinstance(obj, float):
         if math.isnan(obj) or math.isinf(obj):
             return None
@@ -241,12 +244,12 @@ async def analyze_excel(
 
         results.append(sheet_result)
 
-    return {
+    return _sanitize({
         "filename": filename,
         "available_sheets": available_sheets,
         "sheets_analyzed": sheets_to_analyze,
         "results": results,
-    }
+    })
 
 
 @app.get("/api/sheets")
