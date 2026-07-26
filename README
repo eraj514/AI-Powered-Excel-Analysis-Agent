@@ -11,7 +11,7 @@ recommended actions.
 analysis skills.
 
 ## Live URL
- 🔗 [Live App](https://excel-insights--erajfatima14.replit.app/api/docs)
+  [Live App](https://excel-insights--erajfatima14.replit.app/api/docs)
 
 Open the link above — it's FastAPI's interactive documentation page. No login required.
 Try `POST /api/analyze` (upload an Excel file) or `GET /api/healthz` to test it directly.
