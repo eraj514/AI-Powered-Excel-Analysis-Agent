@@ -1,0 +1,54 @@
+# AI-Powered Excel Analysis Agent
+
+## What it does & the problem it solves
+Many students and small business owners in Pakistan collect data in Excel but don't have the
+statistical skills to understand it. This AI agent takes any Excel spreadsheet, automatically
+computes real statistics and detects data anomalies using machine learning, then uses an AI
+agent to explain the findings in plain English — key insights, data quality issues, and
+recommended actions.
+
+**Who it's for:** students, freelancers, and small business owners who use Excel but lack data
+analysis skills.
+
+## Live URL
+ https://excel-insights--erajfatima14.replit.app/api/docs
+
+Open the link above — it's FastAPI's interactive documentation page. No login required.
+Try `POST /api/analyze` (upload an Excel file) or `GET /api/healthz` to test it directly.
+
+## Features
+- Upload any .xlsx or .xls file for instant analysis
+- Automatic statistics: row/column counts, missing values, mean/median/std per column
+- Machine learning-based anomaly detection (Isolation Forest)
+- AI agent that turns statistics into plain-English insights and recommendations
+- Clean error handling for invalid files and API failures
+
+## The AI feature
+After computing statistics and running anomaly detection, the results are sent to an LLM
+(Groq API, Llama 3.3 70B) with this system prompt, written by me:
+
+You are a senior data analyst. You will be given statistics computed from an uploaded Excel
+spreadsheet: row/column counts, missing value percentages per column, basic statistics (mean,
+median, std) for numeric columns, and a list of anomalous rows detected by an Isolation Forest
+model. Based on this information, respond with ONLY a valid JSON object containing: a
+plain-English summary, key insights, data quality issues, and recommended actions. Be specific
+and reference actual column names and numbers from the statistics given to you.
+
+The AI never sees the raw spreadsheet data itself — only the computed statistics — which keeps
+the analysis fast and privacy-conscious.
+
+## Tools, services, and models used
+- Python, FastAPI
+- pandas, scikit-learn (Isolation Forest for anomaly detection)
+- Groq API (Llama 3.3 70B)
+- Deployed on Replit
+
+## Screenshots
+
+
+## How to run this project locally
+1. Clone this repository
+2. Install dependencies: `pip install -r requirements.txt`
+3. Set your GROQ_API_KEY environment variable (get one free at console.groq.com)
+4. Run: `uvicorn main:app --reload`
+5. Open http://localhost:8000/api/docs
