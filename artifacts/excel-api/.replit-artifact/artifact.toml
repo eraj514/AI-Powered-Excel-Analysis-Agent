@@ -1,0 +1,24 @@
+kind = "web"
+previewPath = "/"
+title = "Excel Analyzer API"
+version = "1.0.0"
+id = "artifacts/excel-api"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 25277
+
+[services.development]
+run = "sh -c 'cd /home/runner/workspace/artifacts/excel-api && uvicorn main:app --host 0.0.0.0 --port $PORT --reload'"
+
+[services.production]
+run = [ "sh", "-c", "cd /home/runner/workspace/artifacts/excel-api && uvicorn main:app --host 0.0.0.0 --port $PORT" ]
+
+[services.production.health.startup]
+path = "/api/healthz"
+
+[services.env]
+PORT = "25277"
+BASE_PATH = "/"
